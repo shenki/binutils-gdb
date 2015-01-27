@@ -255,7 +255,8 @@ plugin_get_ir_dummy_bfd (const char *name, bfd *srctemplate)
       bfd_set_arch_info (abfd, bfd_get_arch_info (srctemplate));
       bfd_set_gp_size (abfd, bfd_get_gp_size (srctemplate));
       if (bfd_make_writable (abfd)
-	  && bfd_copy_private_bfd_data (srctemplate, abfd))
+	  && (srctemplate->tdata.any == NULL
+	      || bfd_copy_private_bfd_data (srctemplate, abfd)))
 	{
 	  flagword flags;
 
