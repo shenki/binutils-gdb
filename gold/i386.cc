@@ -487,12 +487,15 @@ class Target_i386 : public Sized_target<32, false>
   bool
   do_is_call_to_non_split(const Symbol* sym, unsigned int) const;
 
+  typedef typename Sized_relobj_file<32, false>::Views Views;
+
   // Adjust -fsplit-stack code which calls non-split-stack code.
   void
   do_calls_non_split(Relobj* object, unsigned int shndx,
 		     section_offset_type fnoffset, section_size_type fnsize,
 		     unsigned char* view, section_size_type view_size,
-		     std::string* from, std::string* to) const;
+		     std::string* from, std::string* to,
+		     const unsigned char *, size_t, Views *) const;
 
   // Return the size of the GOT section.
   section_size_type
@@ -3884,7 +3887,10 @@ Target_i386::do_calls_non_split(Relobj* object, unsigned int shndx,
 				       unsigned char* view,
 				       section_size_type view_size,
 				       std::string* from,
-				       std::string* to) const
+				       std::string* to,
+				       const unsigned char *,
+				       size_t,
+				       Views *) const
 {
   // The function starts with a comparison of the stack pointer and a
   // field in the TCB.  This is followed by a jump.

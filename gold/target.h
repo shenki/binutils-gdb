@@ -38,6 +38,9 @@
 #include "parameters.h"
 #include "stringpool.h"
 #include "debug.h"
+#include "fileread.h"
+#include "reloc.h"
+#include "object.h"
 
 namespace gold
 {
@@ -328,22 +331,6 @@ class Target
   bool
   is_call_to_non_split(const Symbol* sym, unsigned int r_type) const
   { return this->do_is_call_to_non_split(sym, r_type); }
-
-  // A function starts at OFFSET in section SHNDX in OBJECT.  That
-  // function was compiled with -fsplit-stack, but it refers to a
-  // function which was compiled without -fsplit-stack.  VIEW is a
-  // modifiable view of the section; VIEW_SIZE is the size of the
-  // view.  The target has to adjust the function so that it allocates
-  // enough stack.
-  void
-  calls_non_split(Relobj* object, unsigned int shndx,
-		  section_offset_type fnoffset, section_size_type fnsize,
-		  unsigned char* view, section_size_type view_size,
-		  std::string* from, std::string* to) const
-  {
-    this->do_calls_non_split(object, shndx, fnoffset, fnsize, view, view_size,
-			     from, to);
-  }
 
   // Make an ELF object.
   template<int size, bool big_endian>
@@ -661,12 +648,6 @@ class Target
   virtual bool
   do_is_call_to_non_split(const Symbol* sym, unsigned int) const;
 
-  // Virtual function which may be overridden by the child class.
-  virtual void
-  do_calls_non_split(Relobj* object, unsigned int, section_offset_type,
-		     section_size_type, unsigned char*, section_size_type,
-		     std::string*, std::string*) const;
-
   // make_elf_object hooks.  There are four versions of these for
   // different address sizes and endianness.
 
@@ -726,6 +707,16 @@ class Target
   bool
   match_view(const unsigned char* view, section_size_type view_size,
 	     section_offset_type offset, const char* bytes, size_t len) const;
+
+  // A function for targets to call.  Return whether BYTES/LEN matches
+  // VIEW/VIEW_SIZE at OFFSET.
+  bool
+  match_view(const unsigned char* view, section_size_type view_size,
+	     section_offset_type offset, const unsigned char* bytes, size_t len) const
+    {
+      return this->match_view(view, view_size, offset,
+			      reinterpret_cast<const char *>(bytes), len);
+    }
 
   // Set the contents of a VIEW/VIEW_SIZE to nops starting at OFFSET
   // for LEN bytes.
@@ -823,6 +814,8 @@ template<int size, bool big_endian>
 class Sized_target : public Target
 {
  public:
+  typedef typename Sized_relobj_file<size, big_endian>::Views Views;
+
   // Make a new symbol table entry for the target.  This should be
   // overridden by a target which needs additional information in the
   // symbol table.  This will only be called if has_make_symbol()
@@ -1081,6 +1074,24 @@ class Sized_target : public Target
 			      dst_obj, dst_shndx, dst_off);
   }
 
+  // A function starts at OFFSET in section SHNDX in OBJECT.  That
+  // function was compiled with -fsplit-stack, but it refers to a
+  // function which was compiled without -fsplit-stack.  VIEW is a
+  // modifiable view of the section; VIEW_SIZE is the size of the
+  // view.  The target has to adjust the function so that it allocates
+  // enough stack.
+  void
+  calls_non_split(Relobj* object, unsigned int shndx,
+		  section_offset_type fnoffset, section_size_type fnsize,
+		  unsigned char* view, section_size_type view_size,
+		  std::string* from, std::string* to,
+		  const unsigned char *prelocs, size_t reloc_count,
+		  Views *pviews) const
+  {
+    this->do_calls_non_split(object, shndx, fnoffset, fnsize, view, view_size,
+			     from, to, prelocs, reloc_count, pviews);
+  }
+
  protected:
   Sized_target(const Target::Target_info* pti)
     : Target(pti)
@@ -1099,6 +1110,13 @@ class Sized_target : public Target
 		      Relobj*, unsigned int,
 		      typename elfcpp::Elf_types<size>::Elf_Addr) const
   { }
+
+  // Virtual function which may be overridden by the child class.
+  virtual void
+  do_calls_non_split(Relobj* object, unsigned int, section_offset_type,
+		     section_size_type, unsigned char*, section_size_type,
+		     std::string*, std::string*, const unsigned char *,
+		     size_t, Views *) const;
 
   virtual void
   do_function_location(Symbol_location*) const

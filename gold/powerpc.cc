@@ -627,12 +627,15 @@ class Target_powerpc : public Sized_target<size, big_endian>
   do_can_check_for_function_pointers() const
   { return true; }
 
+  typedef typename Sized_relobj_file<size, big_endian>::Views Views;
+
   // Adjust -fsplit-stack code which calls non-split-stack code.
   void
   do_calls_non_split(Relobj* object, unsigned int shndx,
 		     section_offset_type fnoffset, section_size_type fnsize,
 		     unsigned char* view, section_size_type view_size,
-		     std::string* from, std::string* to) const;
+		     std::string* from, std::string* to,
+		     const unsigned char *, size_t, Views *) const;
 
   // Relocate a section.
   void
@@ -6593,14 +6596,18 @@ Target_powerpc<size, big_endian>::do_calls_non_split(
     unsigned char* view,
     section_size_type view_size,
     std::string* from,
-    std::string* to) const
+    std::string* to,
+    const unsigned char *prelocs,
+    size_t reloc_count,
+    Views *pviews) const
 {
   // 32-bit not supported.
   if (size == 32)
     {
       // warn
-      Target::do_calls_non_split(object, shndx, fnoffset, fnsize,
-				 view, view_size, from, to);
+      Sized_target<size, big_endian>::do_calls_non_split(object, shndx, fnoffset, fnsize,
+				 view, view_size, from, to,
+				 prelocs, reloc_count, pviews);
       return;
     }
 

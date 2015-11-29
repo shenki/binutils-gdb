@@ -1007,7 +1007,7 @@ Sized_relobj_file<size, big_endian>::do_relocate_sections(
 	  if ((data_shdr.get_sh_flags() & elfcpp::SHF_EXECINSTR) != 0)
 	    this->split_stack_adjust(symtab, pshdrs, sh_type, index,
 				     prelocs, reloc_count, view, view_size,
-				     &reloc_map);
+				     &reloc_map, pviews);
 	}
 
       Relocatable_relocs* rr = NULL;
@@ -1207,20 +1207,21 @@ Sized_relobj_file<size, big_endian>::split_stack_adjust(
     size_t reloc_count,
     unsigned char* view,
     section_size_type view_size,
-    Reloc_symbol_changes** reloc_map)
+    Reloc_symbol_changes** reloc_map,
+    Views *pviews)
 {
   if (sh_type == elfcpp::SHT_REL)
     this->split_stack_adjust_reltype<elfcpp::SHT_REL>(symtab, pshdrs, shndx,
 						      prelocs, reloc_count,
 						      view, view_size,
-						      reloc_map);
+						      reloc_map, pviews);
   else
     {
       gold_assert(sh_type == elfcpp::SHT_RELA);
       this->split_stack_adjust_reltype<elfcpp::SHT_RELA>(symtab, pshdrs, shndx,
 							 prelocs, reloc_count,
 							 view, view_size,
-							 reloc_map);
+							 reloc_map, pviews);
     }
 }
 
@@ -1238,7 +1239,8 @@ Sized_relobj_file<size, big_endian>::split_stack_adjust_reltype(
     size_t reloc_count,
     unsigned char* view,
     section_size_type view_size,
-    Reloc_symbol_changes** reloc_map)
+    Reloc_symbol_changes** reloc_map,
+    Views *pviews)
 {
   typedef typename Reloc_types<sh_type, size, big_endian>::Reloc Reltype;
   const int reloc_size = Reloc_types<sh_type, size, big_endian>::reloc_size;
@@ -1330,8 +1332,10 @@ Sized_relobj_file<size, big_endian>::split_stack_adjust_reltype(
     {
       std::string from;
       std::string to;
-      parameters->target().calls_non_split(this, shndx, p->first, p->second,
-					   view, view_size, &from, &to);
+      dynamic_cast<const Sized_target<size, big_endian> &>(parameters->target())
+			  .calls_non_split(this, shndx, p->first, p->second,
+					   view, view_size, &from, &to,
+					   prelocs, reloc_count, pviews);
       if (!from.empty())
 	{
 	  gold_assert(!to.empty());

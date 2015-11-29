@@ -557,12 +557,15 @@ class Target_x86_64 : public Sized_target<size, false>
   uint64_t
   do_ehframe_datarel_base() const;
 
+  typedef typename Sized_relobj_file<size, false>::Views Views;
+
   // Adjust -fsplit-stack code which calls non-split-stack code.
   void
   do_calls_non_split(Relobj* object, unsigned int shndx,
 		     section_offset_type fnoffset, section_size_type fnsize,
 		     unsigned char* view, section_size_type view_size,
-		     std::string* from, std::string* to) const;
+		     std::string* from, std::string* to,
+		     const unsigned char *, size_t, Views *) const;
 
   // Return the size of the GOT section.
   section_size_type
@@ -4600,7 +4603,10 @@ Target_x86_64<size>::do_calls_non_split(Relobj* object, unsigned int shndx,
 					unsigned char* view,
 					section_size_type view_size,
 					std::string* from,
-					std::string* to) const
+					std::string* to,
+					const unsigned char *,
+					size_t,
+					Views *) const
 {
   const char* const cmp_insn = reinterpret_cast<const char*>
       (size == 32 ? cmp_insn_32 : cmp_insn_64);

@@ -1365,12 +1365,21 @@ class Relobj : public Object
   is_big_endian() const
   { return this->do_is_big_endian(); }
 
- protected:
   // The output section to be used for each input section, indexed by
   // the input section number.  The output section is NULL if the
   // input section is to be discarded.
   typedef std::vector<Output_section*> Output_sections;
 
+  // Return the vector mapping input sections to output sections.
+  Output_sections&
+  output_sections()
+  { return this->output_sections_; }
+
+  const Output_sections&
+  output_sections() const
+  { return this->output_sections_; }
+
+ protected:
   // Read the relocs--implemented by child class.
   virtual void
   do_read_relocs(Read_relocs_data*) = 0;
@@ -1465,15 +1474,6 @@ class Relobj : public Object
     gold_assert(shndx < this->output_sections_.size());
     return this->output_sections_[shndx];
   }
-
-  // Return the vector mapping input sections to output sections.
-  Output_sections&
-  output_sections()
-  { return this->output_sections_; }
-
-  const Output_sections&
-  output_sections() const
-  { return this->output_sections_; }
 
   // Set the size of the relocatable relocs array.
   void
@@ -2316,6 +2316,20 @@ class Sized_relobj_file : public Sized_relobj<size, big_endian>
   bool is_deferred_layout() const
   { return this->is_deferred_layout_; }
 
+  // Views and sizes when relocating.
+  struct View_size
+  {
+    unsigned char* view;
+    typename elfcpp::Elf_types<size>::Elf_Addr address;
+    off_t offset;
+    section_size_type view_size;
+    bool is_input_output_view;
+    bool is_postprocessing_view;
+    bool is_ctors_reverse_view;
+  };
+
+  typedef std::vector<View_size> Views;
+
  protected:
   typedef typename Sized_relobj<size, big_endian>::Output_sections
       Output_sections;
@@ -2527,20 +2541,6 @@ class Sized_relobj_file : public Sized_relobj<size, big_endian>
   local_values()
   { return &this->local_values_; }
 
-  // Views and sizes when relocating.
-  struct View_size
-  {
-    unsigned char* view;
-    typename elfcpp::Elf_types<size>::Elf_Addr address;
-    off_t offset;
-    section_size_type view_size;
-    bool is_input_output_view;
-    bool is_postprocessing_view;
-    bool is_ctors_reverse_view;
-  };
-
-  typedef std::vector<View_size> Views;
-
   // Stash away info for a number of special sections.
   // Return true if any of the sections found require local symbols to be read.
   virtual bool
@@ -2696,7 +2696,8 @@ class Sized_relobj_file : public Sized_relobj<size, big_endian>
 		     unsigned int sh_type, unsigned int shndx,
 		     const unsigned char* prelocs, size_t reloc_count,
 		     unsigned char* view, section_size_type view_size,
-		     Reloc_symbol_changes** reloc_map);
+		     Reloc_symbol_changes** reloc_map,
+		     Views *pviews);
 
   template<int sh_type>
   void
@@ -2704,7 +2705,8 @@ class Sized_relobj_file : public Sized_relobj<size, big_endian>
 			     unsigned int shndx, const unsigned char* prelocs,
 			     size_t reloc_count, unsigned char* view,
 			     section_size_type view_size,
-			     Reloc_symbol_changes** reloc_map);
+			     Reloc_symbol_changes** reloc_map,
+			     Views *pviews);
 
   // Find all functions in a section.
   void

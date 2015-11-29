@@ -157,23 +157,6 @@ Target::do_is_call_to_non_split(const Symbol* sym, unsigned int) const
   return sym->type() == elfcpp::STT_FUNC;
 }
 
-// Default conversion for -fsplit-stack is to give an error.
-
-void
-Target::do_calls_non_split(Relobj* object, unsigned int, section_offset_type,
-			   section_size_type, unsigned char*, section_size_type,
-			   std::string*, std::string*) const
-{
-  static bool warned;
-  if (!warned)
-    {
-      gold_error(_("linker does not include stack split support "
-		   "required by %s"),
-		 object->name().c_str());
-      warned = true;
-    }
-}
-
 //  Return whether BYTES/LEN matches VIEW/VIEW_SIZE at OFFSET.
 
 bool
@@ -234,6 +217,32 @@ Sized_target<size, big_endian>::do_adjust_elf_header(unsigned char* view,
 
       elfcpp::Ehdr_write<size, big_endian> oehdr(view);
       oehdr.put_e_ident(e_ident);
+    }
+}
+
+// Default conversion for -fsplit-stack is to give an error.
+
+template<int size, bool big_endian>
+void
+Sized_target<size, big_endian>::do_calls_non_split(Relobj* object,
+						   unsigned int,
+						   section_offset_type,
+						   section_size_type,
+						   unsigned char*,
+						   section_size_type,
+						   std::string*,
+						   std::string*,
+						   const unsigned char *,
+						   size_t,
+						   Views *) const
+{
+  static bool warned;
+  if (!warned)
+    {
+      gold_error(_("linker does not include stack split support "
+		   "required by %s"),
+		 object->name().c_str());
+      warned = true;
     }
 }
 
