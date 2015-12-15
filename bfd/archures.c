@@ -509,6 +509,7 @@ DESCRIPTION
 .#define bfd_mach_nios2r2	2
 .  bfd_arch_visium,	{* Visium *}
 .#define bfd_mach_visium	1
+.  bfd_arch_pore,      {* IBM PORE/SBE *}
 .  bfd_arch_last
 .  };
 */
@@ -610,6 +611,7 @@ extern const bfd_arch_info_type bfd_or1k_arch;
 extern const bfd_arch_info_type bfd_pdp11_arch;
 extern const bfd_arch_info_type bfd_pj_arch;
 extern const bfd_arch_info_type bfd_plugin_arch;
+extern const bfd_arch_info_type bfd_pore_arch;
 extern const bfd_arch_info_type bfd_powerpc_archs[];
 #define bfd_powerpc_arch bfd_powerpc_archs[0]
 extern const bfd_arch_info_type bfd_rs6000_arch;

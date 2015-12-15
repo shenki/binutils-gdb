@@ -134,6 +134,7 @@
 #include "elf/nios2.h"
 #include "elf/or1k.h"
 #include "elf/pj.h"
+#include "elf/pore.h"
 #include "elf/ppc.h"
 #include "elf/ppc64.h"
 #include "elf/rl78.h"
@@ -1296,6 +1297,10 @@ dump_relocations (FILE * file,
 	  rtype = elf_nds32_reloc_type (type);
 	  break;
 
+	case EM_PORE:
+	  rtype = elf_pore_reloc_type (type);
+	  break;
+
 	case EM_PPC:
 	  rtype = elf_ppc_reloc_type (type);
 	  break;
@@ -2108,6 +2113,7 @@ get_machine_name (unsigned e_machine)
     case EM_PPC_OLD:		return "Power PC (old)";
     case EM_SPARC32PLUS:	return "Sparc v8+" ;
     case EM_960:		return "Intel 90860";
+    case EM_PORE:		return "PORE/SBE";
     case EM_PPC:		return "PowerPC";
     case EM_PPC64:		return "PowerPC64";
     case EM_FR20:		return "Fujitsu FR20";
@@ -11426,6 +11432,8 @@ is_32bit_abs_reloc (unsigned int reloc_type)
     case EM_PJ:
     case EM_PJ_OLD:
       return reloc_type == 1; /* R_PJ_DATA_DIR32.  */
+    case EM_PORE:
+      return reloc_type == 2; /* R_PORE_32.  */
     case EM_PPC64:
       return reloc_type == 1; /* R_PPC64_ADDR32.  */
     case EM_PPC:
@@ -11520,6 +11528,8 @@ is_32bit_pcrel_reloc (unsigned int reloc_type)
       return reloc_type == 9; /* R_OR1K_32_PCREL.  */
     case EM_PARISC:
       return reloc_type == 9;  /* R_PARISC_PCREL32.  */
+    case EM_PORE:
+      return reloc_type == 6;  /* R_PORE_REL32.  */
     case EM_PPC:
       return reloc_type == 26; /* R_PPC_REL32.  */
     case EM_PPC64:
@@ -11574,6 +11584,8 @@ is_64bit_abs_reloc (unsigned int reloc_type)
       return reloc_type == 0x27; /* R_IA64_DIR64LSB.  */
     case EM_PARISC:
       return reloc_type == 80; /* R_PARISC_DIR64.  */
+    case EM_PORE:
+      return reloc_type == 1;  /* R_PORE_64.  */
     case EM_PPC64:
       return reloc_type == 38; /* R_PPC64_ADDR64.  */
     case EM_SPARC32PLUS:
@@ -11612,6 +11624,8 @@ is_64bit_pcrel_reloc (unsigned int reloc_type)
       return reloc_type == 0x4f; /* R_IA64_PCREL64LSB.  */
     case EM_PARISC:
       return reloc_type == 72; /* R_PARISC_PCREL64.  */
+    case EM_PORE:
+      return reloc_type == 5;  /* R_PORE_REL64.  */
     case EM_PPC64:
       return reloc_type == 44; /* R_PPC64_REL64.  */
     case EM_SPARC32PLUS:
@@ -11728,6 +11742,7 @@ is_none_reloc (unsigned int reloc_type)
     case EM_PARISC:  /* R_PARISC_NONE.  */
     case EM_ALPHA:   /* R_ALPHA_NONE.  */
     case EM_ADAPTEVA_EPIPHANY:
+    case EM_PORE:    /* R_PORE_NONE.  */
     case EM_PPC:     /* R_PPC_NONE.  */
     case EM_PPC64:   /* R_PPC64_NONE.  */
     case EM_ARC:     /* R_ARC_NONE.  */

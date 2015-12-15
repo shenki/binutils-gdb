@@ -118,6 +118,7 @@ cpu-or1k.c
 cpu-pdp11.c
 cpu-pj.c
 cpu-plugin.c
+cpu-pore.c
 cpu-powerpc.c
 cpu-rl78.c
 cpu-rs6000.c
@@ -240,6 +241,7 @@ elf64-hppa.h
 elf64-ia64-vms.c
 elf64-mips.c
 elf64-mmix.c
+elf64-pore.c
 elf64-ppc.c
 elf64-s390.c
 elf64-sh64.c

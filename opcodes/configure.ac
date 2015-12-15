@@ -305,6 +305,7 @@ if test x${all_targets} = xfalse ; then
 	bfd_or1k_arch)		ta="$ta or1k-asm.lo or1k-desc.lo or1k-dis.lo or1k-ibld.lo or1k-opc.lo" using_cgen=yes ;;
 	bfd_pdp11_arch)		ta="$ta pdp11-dis.lo pdp11-opc.lo" ;;
 	bfd_pj_arch)		ta="$ta pj-dis.lo pj-opc.lo" ;;
+	bfd_pore_arch)	        ta="$ta pore-dis.lo pore-opc.lo" ;;
 	bfd_powerpc_arch)	ta="$ta ppc-dis.lo ppc-opc.lo" ;;
 	bfd_powerpc_64_arch)	ta="$ta ppc-dis.lo ppc-opc.lo" ;;
 	bfd_pyramid_arch)	;;

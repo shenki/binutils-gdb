@@ -302,7 +302,7 @@ zlibdir = @zlibdir@
 zlibinc = @zlibinc@
 AUTOMAKE_OPTIONS = 1.11 dejagnu foreign no-dist
 ACLOCAL_AMFLAGS = -I .. -I ../config -I ../bfd
-SUBDIRS = doc po
+SUBDIRS = po
 tooldir = $(exec_prefix)/$(target_alias)
 
 # This is where we get zlib from.  zlibdir is -L../zlib and zlibinc is
@@ -447,6 +447,7 @@ TARGET_CPU_CFILES = \
 	config/tc-or1k.c \
 	config/tc-pdp11.c \
 	config/tc-pj.c \
+	config/tc-pore.c \
 	config/tc-ppc.c \
 	config/tc-rl78.c \
 	config/tc-rx.c \
@@ -520,6 +521,7 @@ TARGET_CPU_HFILES = \
 	config/tc-or1k.h \
 	config/tc-pdp11.h \
 	config/tc-pj.h \
+	config/tc-pore.c \
 	config/tc-ppc.h \
 	config/tc-rl78.h \
 	config/tc-rx.h \
@@ -877,6 +879,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tc-or1k.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tc-pdp11.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tc-pj.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tc-pore.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tc-ppc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tc-rl78.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tc-rx.Po@am__quote@
@@ -1583,6 +1586,20 @@ tc-pj.obj: config/tc-pj.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='config/tc-pj.c' object='tc-pj.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o tc-pj.obj `if test -f 'config/tc-pj.c'; then $(CYGPATH_W) 'config/tc-pj.c'; else $(CYGPATH_W) '$(srcdir)/config/tc-pj.c'; fi`
+
+tc-pore.o: config/tc-pore.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT tc-pore.o -MD -MP -MF $(DEPDIR)/tc-pore.Tpo -c -o tc-pore.o `test -f 'config/tc-pore.c' || echo '$(srcdir)/'`config/tc-pore.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/tc-pore.Tpo $(DEPDIR)/tc-pore.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='config/tc-pore.c' object='tc-pore.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o tc-pore.o `test -f 'config/tc-pore.c' || echo '$(srcdir)/'`config/tc-pore.c
+
+tc-pore.obj: config/tc-pore.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT tc-pore.obj -MD -MP -MF $(DEPDIR)/tc-pore.Tpo -c -o tc-pore.obj `if test -f 'config/tc-pore.c'; then $(CYGPATH_W) 'config/tc-pore.c'; else $(CYGPATH_W) '$(srcdir)/config/tc-pore.c'; fi`
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/tc-pore.Tpo $(DEPDIR)/tc-pore.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='config/tc-pore.c' object='tc-pore.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o tc-pore.obj `if test -f 'config/tc-pore.c'; then $(CYGPATH_W) 'config/tc-pore.c'; else $(CYGPATH_W) '$(srcdir)/config/tc-pore.c'; fi`
 
 tc-ppc.o: config/tc-ppc.c
 @am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT tc-ppc.o -MD -MP -MF $(DEPDIR)/tc-ppc.Tpo -c -o tc-ppc.o `test -f 'config/tc-ppc.c' || echo '$(srcdir)/'`config/tc-ppc.c

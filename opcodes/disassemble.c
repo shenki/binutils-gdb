@@ -72,6 +72,7 @@
 #define ARCH_or1k
 #define ARCH_pdp11
 #define ARCH_pj
+#define ARCH_pore
 #define ARCH_powerpc
 #define ARCH_rs6000
 #define ARCH_rl78
@@ -366,6 +367,11 @@ disassembler (abfd)
 #ifdef ARCH_pj
     case bfd_arch_pj:
       disassemble = print_insn_pj;
+      break;
+#endif
+#ifdef ARCH_pore
+    case bfd_arch_pore:
+      disassemble = print_insn_pore;
       break;
 #endif
 #ifdef ARCH_powerpc

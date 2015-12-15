@@ -382,6 +382,8 @@
 
 #define EM_XSTORMY16		0xad45
 
+#define EM_PORE			0xcafe	/* Power On Reset Engine.  */
+
 /* mn10200 and mn10300 backend magic numbers.
    Written in the absense of an ABI.  */
 #define EM_CYGNUS_MN10300	0xbeef

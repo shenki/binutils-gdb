@@ -373,6 +373,7 @@ ALL_EMULATION_SOURCES = \
 	epdp11.c \
 	epjelf.c \
 	epjlelf.c \
+	eporeelf.c \
 	eppclynx.c \
 	eppcmacos.c \
 	eppcnw.c \
@@ -1662,6 +1663,9 @@ epjelf.c: $(srcdir)/emulparams/pjelf.sh \
   $(ELF_GEN_DEPS) $(srcdir)/scripttempl/elf.sc ${GEN_DEPENDS}
 
 epjlelf.c: $(srcdir)/emulparams/pjlelf.sh $(srcdir)/emulparams/pjelf.sh \
+  $(ELF_GEN_DEPS) $(srcdir)/scripttempl/elf.sc ${GEN_DEPENDS}
+
+eporeelf.c: $(srcdir)/emulparams/poreelf.sh \
   $(ELF_GEN_DEPS) $(srcdir)/scripttempl/elf.sc ${GEN_DEPENDS}
 
 eppclynx.c: $(srcdir)/emulparams/ppclynx.sh \

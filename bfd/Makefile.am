@@ -146,6 +146,7 @@ ALL_MACHINES = \
 	cpu-pdp11.lo \
 	cpu-pj.lo \
 	cpu-plugin.lo \
+	cpu-pore.lo \
 	cpu-powerpc.lo \
 	cpu-rs6000.lo \
 	cpu-rl78.lo \
@@ -233,6 +234,7 @@ ALL_MACHINES_CFILES = \
 	cpu-pdp11.c \
 	cpu-pj.c \
 	cpu-plugin.c \
+	cpu-pore.c \
 	cpu-powerpc.c \
 	cpu-rs6000.c \
 	cpu-rl78.c \
@@ -673,6 +675,7 @@ BFD64_BACKENDS = \
 	elf64-ia64-vms.lo \
 	elf64-mips.lo \
 	elf64-mmix.lo \
+	elf64-pore.lo \
 	elf64-ppc.lo \
 	elf64-s390.lo \
 	elf64-sh64.lo \
@@ -711,6 +714,7 @@ BFD64_BACKENDS_CFILES = \
 	elf64-ia64-vms.c \
 	elf64-mips.c \
 	elf64-mmix.c \
+	elf64-pore.c \
 	elf64-ppc.c \
 	elf64-s390.c \
 	elf64-sh64.c \

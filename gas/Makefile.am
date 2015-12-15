@@ -176,6 +176,7 @@ TARGET_CPU_CFILES = \
 	config/tc-or1k.c \
 	config/tc-pdp11.c \
 	config/tc-pj.c \
+	config/tc-pore.c \
 	config/tc-ppc.c \
 	config/tc-rl78.c \
 	config/tc-rx.c \
@@ -249,6 +250,7 @@ TARGET_CPU_HFILES = \
 	config/tc-or1k.h \
 	config/tc-pdp11.h \
 	config/tc-pj.h \
+	config/tc-pore.c \
 	config/tc-ppc.h \
 	config/tc-rl78.h \
 	config/tc-rx.h \

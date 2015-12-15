@@ -781,6 +781,7 @@ extern const bfd_target pef_xlib_vec;
 extern const bfd_target pj_elf32_vec;
 extern const bfd_target pj_elf32_le_vec;
 extern const bfd_target plugin_vec;
+extern const bfd_target pore_elf64_vec;
 extern const bfd_target powerpc_boot_vec;
 extern const bfd_target powerpc_elf32_vec;
 extern const bfd_target powerpc_elf32_le_vec;
@@ -1285,6 +1286,7 @@ static const bfd_target * const _bfd_target_vector[] =
 	&powerpc_elf32_fbsd_vec,
 	&powerpc_elf32_vxworks_vec,
 #ifdef BFD64
+	&pore_elf64_vec
 	&powerpc_elf64_vec,
 	&powerpc_elf64_le_vec,
 	&powerpc_elf64_fbsd_vec,

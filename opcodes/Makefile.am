@@ -221,6 +221,8 @@ TARGET_LIBOPCODES_CFILES = \
 	pdp11-opc.c \
 	pj-dis.c \
 	pj-opc.c \
+	pore-dis.c \
+	pore-opc.c \
 	ppc-dis.c \
 	ppc-opc.c \
 	rl78-decode.c \

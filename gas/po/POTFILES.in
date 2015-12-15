@@ -129,6 +129,8 @@ config/tc-pdp11.c
 config/tc-pdp11.h
 config/tc-pj.c
 config/tc-pj.h
+config/tc-pore.c
+config/tc-pore.c
 config/tc-ppc.c
 config/tc-ppc.h
 config/tc-rl78.c

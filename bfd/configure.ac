@@ -906,6 +906,7 @@ do
     pj_elf32_vec)		 tb="$tb elf32-pj.lo elf32.lo $elf" ;;
     pj_elf32_le_vec)		 tb="$tb elf32-pj.lo elf32.lo $elf" ;;
     plugin_vec)			 tb="$tb plugin.lo" ;;
+    pore_elf64_vec)		 tb="$tb elf64-pore.lo elf64-gen.lo elf64.lo $elf"; target_size=64 ;;
     powerpc_boot_vec)		 tb="$tb ppcboot.lo" ;;
     powerpc_elf32_vec)		 tb="$tb elf32-ppc.lo elf-vxworks.lo elf32.lo $elf" ;;
     powerpc_elf32_le_vec)	 tb="$tb elf32-ppc.lo elf-vxworks.lo elf32.lo $elf" ;;

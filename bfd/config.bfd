@@ -120,6 +120,7 @@ nios2*)          targ_archs=bfd_nios2_arch ;;
 or1k*|or1knd*)	 targ_archs=bfd_or1k_arch ;;
 pdp11*)		 targ_archs=bfd_pdp11_arch ;;
 pj*)		 targ_archs="bfd_pj_arch bfd_i386_arch";;
+pore*)		 targ_archs="bfd_pore_arch bfd_powerpc_arch";;
 powerpc*)	 targ_archs="bfd_rs6000_arch bfd_powerpc_arch" ;;
 rs6000)		 targ_archs="bfd_rs6000_arch bfd_powerpc_arch" ;;
 s390*)		 targ_archs=bfd_s390_arch ;;
@@ -1232,6 +1233,15 @@ case "${targ}" in
     targ_defvec=pj_elf32_le_vec
     targ_selvecs="pj_elf32_le_vec pj_elf32_vec i386_elf32_vec iamcu_elf32_vec"
     ;;
+
+#ifdef BFD64
+  pore-*-*)
+    targ_defvec=bfd_elf64_pore_vec
+    targ_selvecs=bfd_elf32_powerpc_vec
+    targ64_selvecs=bfd_elf64_powerpc_vec
+    want64=true
+    ;;
+#endif
 
   powerpc-*-aix5.[01] | rs6000-*-aix5.[01])
     targ_defvec=rs6000_xcoff_vec

@@ -375,6 +375,8 @@ case ${generic_target} in
 
   pj*)					fmt=elf ;;
 
+  pore-*-*)				fmt=elf ;;
+
   ppc-*-pe | ppc-*-cygwin*)		fmt=coff em=pe ;;
   ppc-*-winnt*)				fmt=coff em=pe ;;
   ppc-*-aix5.[01])			fmt=coff em=aix5 ;;

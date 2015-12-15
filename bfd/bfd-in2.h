@@ -2321,6 +2321,7 @@ enum bfd_architecture
 #define bfd_mach_nios2r2       2
   bfd_arch_visium,     /* Visium */
 #define bfd_mach_visium        1
+  bfd_arch_pore,      /* IBM PORE/SBE */
   bfd_arch_last
   };
 
@@ -2607,6 +2608,7 @@ enum bfd_reloc_code_real {
   BFD_RELOC_32,
   BFD_RELOC_26,
   BFD_RELOC_24,
+  BFD_RELOC_20,
   BFD_RELOC_16,
   BFD_RELOC_14,
   BFD_RELOC_8,
@@ -3254,6 +3256,14 @@ instruction.  */
   BFD_RELOC_PJ_CODE_DIR32,
   BFD_RELOC_PJ_CODE_REL16,
   BFD_RELOC_PJ_CODE_REL32,
+
+/* PORE relocs.  */
+  BFD_RELOC_PORE_22,
+  BFD_RELOC_PORE_PCREL32,
+  BFD_RELOC_PORE_PCREL24,
+  BFD_RELOC_PORE_PCREL20,
+  BFD_RELOC_PORE_FEATURE,
+  BFD_RELOC_PORE_PIBMEM,
 
 /* Power(rs6000) and PowerPC relocations.  */
   BFD_RELOC_PPC_B26,
@@ -6817,6 +6827,7 @@ struct bfd
   const struct bfd_build_id *build_id;
 };
 
+
 /* See note beside bfd_set_section_userdata.  */
 static inline bfd_boolean
 bfd_set_cacheable (bfd * abfd, bfd_boolean val)
@@ -6824,7 +6835,6 @@ bfd_set_cacheable (bfd * abfd, bfd_boolean val)
   abfd->cacheable = val;
   return TRUE;
 }
-
 
 typedef enum bfd_error
 {
