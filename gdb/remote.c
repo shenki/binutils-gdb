@@ -3880,7 +3880,9 @@ process_initial_stop_replies (int from_tty)
 	  && thread->suspend.waitstatus_pending_p)
 	selected = thread;
 
-      if (lowest_stopped == NULL || thread->num < lowest_stopped->num)
+      if (lowest_stopped == NULL
+	  || thread->inf->num < lowest_stopped->inf->num
+	  || thread->per_inf_id < lowest_stopped->per_inf_id)
 	lowest_stopped = thread;
 
       if (non_stop)
