@@ -114,7 +114,7 @@ md_begin (void)
         if (strcmp(pore_register[i].name,"?") != 0) 
           {
             local_symbol_make (pore_register[i].name,
-                               &bfd_abs_section, i, &zero_address_frag);
+                               bfd_abs_section_ptr, i, &zero_address_frag);
           }
   while ((symbols_case_sensitive ^= 1) == 0);
 
@@ -124,7 +124,7 @@ md_begin (void)
         if (strcmp(pore_hw_register[i].name,"?") != 0) 
             {
               local_symbol_make (pore_hw_register[i].name,
-                                 &bfd_abs_section, i, &zero_address_frag);
+                                 bfd_abs_section_ptr, i, &zero_address_frag);
             }
     while ((symbols_case_sensitive ^= 1) == 0);
 }
