@@ -26,7 +26,7 @@
 #include "elf-bfd.h"
 #include "elf/pore.h"
 
-#define TARGET_BIG_SYM		bfd_elf64_pore_vec
+#define TARGET_BIG_SYM		pore_elf64_vec
 #define TARGET_BIG_NAME		"elf64-pore"
 #define ELF_ARCH		bfd_arch_pore
 #define ELF_MACHINE_CODE	EM_PORE
@@ -422,7 +422,7 @@ pore_elf_relocate_section (bfd *output_bfd,
       unsigned long r_symndx;
       bfd_reloc_status_type r;
       bfd_boolean unresolved_reloc;
-      bfd_boolean warned;
+      bfd_boolean warned, ignored;
 
       r_type = ELF64_R_TYPE (rel->r_info);
       if (r_type >= R_PORE_max)
@@ -454,22 +454,22 @@ pore_elf_relocate_section (bfd *output_bfd,
 	  RELOC_FOR_GLOBAL_SYMBOL (info, input_bfd, input_section, rel,
 				   r_symndx, symtab_hdr, sym_hashes,
 				   h, sec, relocation,
-				   unresolved_reloc, warned);
+				   unresolved_reloc, warned, ignored);
 
 	  sym_name = h->root.root.string;
 	}
       howto = pore_elf_howto_table + r_type;
 
-      if (sec != NULL && elf_discarded_section (sec))
+      if (sec != NULL && discarded_section (sec))
 	{
 	  /* For relocs against symbols from removed linkonce sections,
 	     or sections discarded by a linker script, we just want the
 	     section contents zeroed.  Avoid any special processing.  */
 	  RELOC_AGAINST_DISCARDED_SECTION (info, input_bfd, input_section,
-					   rel, relend, howto, contents);
+					   rel, 1, relend, howto, 0, contents);
 	}
 
-      if (info->relocatable)
+      if (bfd_link_relocatable (info))
 	continue;
 
       if (r_type == R_PORE_FEATURE)

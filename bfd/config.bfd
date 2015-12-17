@@ -1236,9 +1236,9 @@ case "${targ}" in
 
 #ifdef BFD64
   pore-*-*)
-    targ_defvec=bfd_elf64_pore_vec
-    targ_selvecs=bfd_elf32_powerpc_vec
-    targ64_selvecs=bfd_elf64_powerpc_vec
+    targ_defvec=pore_elf64_vec
+    targ_selvecs=pore_elf64_vec
+    targ64_selvecs=pore_elf64_vec
     want64=true
     ;;
 #endif
