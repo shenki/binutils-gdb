@@ -577,8 +577,6 @@ pjl*-*-*)	        targ_emul=pjlelf
 pj*-*-*)	        targ_emul=pjelf
 			;;
 pore-*-*)	        targ_emul=poreelf
-			targ_extra_emuls=elf32ppc
-			targ64_extra_emuls=elf64ppc
 			;;
 powerpc-*-freebsd* | powerpc-*-kfreebsd*-gnu)
 			targ_emul=elf32ppc_fbsd
